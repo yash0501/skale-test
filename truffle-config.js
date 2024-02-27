@@ -83,6 +83,32 @@ module.exports = {
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
+
+    calypso: {
+      provider: () =>
+        new HDWalletProvider(
+          MNEMONIC,
+          `https://staging-v3.skalenodes.com/v1/staging-utter-unripe-menkar`
+        ),
+      network_id: 344106930,
+      gas: 8500000, // Gas sent with each transaction (default: ~6700000)
+      gasPrice: 20000000000, // 20 gwei (in wei) (default: 100 gwei)
+      from: "0x3bc83d0Aa6BD994373E0e953c165c92091522440",
+      websocket: true, // Enable EventEmitter interface for web3 (default: false)
+    },
+
+    nebula: {
+      provider: () =>
+        new HDWalletProvider(
+          MNEMONIC,
+          `https://testnet.skalenodes.com/v1/lanky-ill-funny-testnet`
+        ),
+      network_id: 37084624,
+      gas: 8500000, // Gas sent with each transaction (default: ~6700000)
+      gasPrice: 20000000000, // 20 gwei (in wei) (default: 100 gwei)
+      from: "0x3bc83d0Aa6BD994373E0e953c165c92091522440",
+      websocket: true, // Enable EventEmitter interface for web3 (default: false)
+    },
     //
     // An additional network, but with some advanced options…
     // advanced: {
@@ -124,7 +150,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.21", // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.18", // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {

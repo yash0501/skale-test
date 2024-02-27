@@ -62,7 +62,7 @@ contract QuestContract {
         require(_totalParticipants > 0, "Total participants should be greater than zero");
 
         questCount++;
-        
+
         Quest storage newQuest = quests[questCount];
         newQuest.title = _title;
         newQuest.description = _description;
@@ -77,10 +77,10 @@ contract QuestContract {
         // Transfer reward amount to the contract
         for (uint256 i = 0; i < _totalRewards; i++) {
             require(
-                address(this).balance + _rewardAmounts[i] >= _rewardAmounts[i],
-                "Overflow in reward transfer"
+                address(this).balance >= _rewardAmounts[i],
+                "Insufficient balance in the contract"
             );
-            require(payable(msg.sender).send(_rewardAmounts[i]), "Reward transfer failed");
+            payable(owner).transfer(_rewardAmounts[i]);
         }
 
         emit QuestCreated(
@@ -96,12 +96,11 @@ contract QuestContract {
         );
     }
 
-
     function enrollInQuest(uint256 _questId) external payable {
         require(_questId > 0 && _questId <= questCount, "Invalid quest ID");
         Quest storage quest = quests[_questId];
         require(quest.enrolled[msg.sender] == false, "User already enrolled");
-        require(msg.value > 0, "Enrollment fee is required");
+        // require(msg.value > 0, "Enrollment fee is required");
 
         require(quest.participants.length < quest.totalParticipants, "Quest is full");
 
